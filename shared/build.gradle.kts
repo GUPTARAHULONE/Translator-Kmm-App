@@ -41,7 +41,12 @@ kotlin {
                 implementation(Deps.turbine)
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Deps.ktorAndroid)
+                implementation(Deps.sqlDelightAndroidDriver)
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
