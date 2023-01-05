@@ -1,8 +1,10 @@
-package com.example.translator_kmm_app.translate.domain.history
+package com.example.translator_kmm_app.translate.data.history
 
 import com.example.translator_kmm_app.core.domain.utils.CommonFlow
 import com.example.translator_kmm_app.core.domain.utils.toCommonFlow
 import com.example.translator_kmm_app.database.TranslateDatabase
+import com.example.translator_kmm_app.translate.domain.history.HistoryDataSource
+import com.example.translator_kmm_app.translate.domain.history.HistoryItem
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.map
