@@ -1,14 +1,15 @@
 package com.example.translator_kmm_app.android.translate.presentation.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.Icon
-import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -38,9 +39,9 @@ fun LanguageDropDown(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onClick }
-                .padding(16.dp)
+                .clickable(onClick = onClick)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
                 model = language.drawableRes,
@@ -54,8 +55,7 @@ fun LanguageDropDown(
                 imageVector = if (isOpen) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
                 contentDescription = if (isOpen) {
                     stringResource(id = com.example.translator_kmm_app.android.R.string.close)
-                }
-             else{
+                } else {
                     stringResource(id = com.example.translator_kmm_app.android.R.string.open)
                 },
                 tint = LightBlue,

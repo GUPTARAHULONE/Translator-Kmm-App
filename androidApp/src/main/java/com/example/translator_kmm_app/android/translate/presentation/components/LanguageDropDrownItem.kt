@@ -16,15 +16,15 @@ import com.example.translator_kmm_app.core.presentation.UiLanguage
 fun LanguageDropDrownItem(
     language: UiLanguage,
     onClick: () -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     DropdownMenuItem(onClick = onClick, modifier = modifier) {
         Image(
             painter = painterResource(id = language.drawableRes),
             contentDescription = language.language.langName,
-            modifier = modifier.size(40.dp)
+            modifier = Modifier.size(40.dp)
         )
-        Spacer(modifier.width(16.dp))
+        Spacer(Modifier.width(16.dp))
         Text(text = language.language.name)
     }
 }
