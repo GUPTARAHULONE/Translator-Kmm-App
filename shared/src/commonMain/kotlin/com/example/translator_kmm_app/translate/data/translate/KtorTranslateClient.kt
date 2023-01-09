@@ -27,7 +27,7 @@ class KtorTranslateClient(
                     TranslateDto(
                         fromText,
                         fromLanguage.langCode,
-                        fromLanguage.langCode
+                        toLanguage.langCode
                     )
                 )
             }
