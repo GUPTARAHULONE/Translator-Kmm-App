@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @Composable
     fun TranslateRoot() {
         val navController = rememberNavController()
@@ -46,6 +47,15 @@ class MainActivity : ComponentActivity() {
             composable(route = Routes.TRANSLATE) {
                 val viewModel = hiltViewModel<AndroidTranslateViewModel>()
                 val state by viewModel.state.collectAsState()
+
+                val voiceResult by it.savedStateHandle.getStateFlow<String?>("voiceResult", null)
+                    .collectAsState()
+
+                LaunchedEffect(voiceResult) {
+                    viewModel.onEvent(TranslateEvent.SubmitVoiceResult(voiceResult))
+                    it.savedStateHandle["voiceResult"] = null
+                }
+
                 TranslateScreen(state = state, onEvent = { event ->
                     when (event) {
                         is TranslateEvent.RecordAudio -> {
@@ -65,8 +75,28 @@ class MainActivity : ComponentActivity() {
                         defaultValue = "en"
                     }
                 )
-            ) {
-                Text(text = "dsd")
+            ) { backStackEntry ->
+                val languageCode = backStackEntry.arguments?.getString("languageCode") ?: "en"
+                val viewModel = hiltViewModel<AndroidVoiceToTextParserViewModel>()
+                val state by viewModel.state.collectAsState()
+
+                VoiceToTextScreen(
+                    state = state,
+                    languageCode = languageCode,
+                    onResult = { spokenText ->
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            "voiceResult",
+                            spokenText
+                        )
+                        navController.popBackStack()
+                    },
+                    onEvent = { event ->
+                        when (event) {
+                            VoiceToTextEvent.Close -> navController.popBackStack()
+                            else -> viewModel.onEvent(event)
+                        }
+                    }
+                )
             }
         }
     }
